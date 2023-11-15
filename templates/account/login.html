@@ -1,0 +1,66 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% load crispy_forms_filters %}
+
+{% block head_title %}{% trans "Entrar" %}{% endblock %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="static/estilo.css">
+    
+</head>
+
+  <div class="text-center">
+    <h1>{% trans "Entrar" %}</h1>
+
+    {% get_providers as socialaccount_providers %}
+
+    {% if socialaccount_providers %}
+    <p>{% blocktrans with site.name as site_name %}Por favor, entre com sua
+    conta Google
+    <!--para o {{ site_name }} uma conta --> {% endblocktrans %}</p>
+
+    <div class="socialaccount_ballot">
+
+      <div class="socialaccount_providers">
+        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+      </div>
+            Ou <a href="{{ signup_url }}">faça um cadastro aqui</a>
+      <div class="login-or border-top border-bottom my-3">{% trans 'e o login abaixo:' %} </div>
+
+    </div>
+
+    {% include "socialaccount/snippets/login_extra.html" %}
+
+    {% else %}
+    <p>{% blocktrans %}If you have not created an account yet, then please
+    <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+    {% endif %}
+  </div>
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <form class="login" method="POST" action="{% url 'account_login' %}">
+          {% csrf_token %}
+          {{ form|crispy }}
+          {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+          {% endif %}
+          <div class="d-grid">
+            <button class="primaryAction mt-3 btn btn-dark" type="submit">{% trans "Entrar" %}</button><br>
+            <a class="button secondaryAction text-dark text-center" href="{% url 'account_reset_password' %}">{% trans "Esqueceu a senha?" %}</a>
+          </div>
+        </form>
+
+        
+
+    </div>
+  </div>
+  {% load static %}
+  <script src="{% static 'javascript.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'account/base.html' %}
+
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="static/estilo.css">
+    
+</head>
+    <div class="text-center">
+        <!--<p>Olá {{ user.first_name }}!</p>
+        <p>Usuário : {{ user }}</p> -->
+        <a href="/form" class="btn btn-dark">Preencher Escala</a>
+        <a href="/dash2" class="btn btn-dark">Quadro Geral</a>
+        <a href="/paineldeescalas" class="btn btn-dark">Painel de Escalas</a>
+        <a class="btn btn-dark" href="{% url 'socialaccount_connections' %}">Configurações</a>
+    </div>
+
+  {% for dbs in db %}
+ 
+    <hr>
+    <div class="col-10 m-auto pt-4 pb-2 text-left">
+     Parabéns {{ user.first_name}} você concluiu o preenchimento da escala SURE<!--de número {{dbs.id}}-->.
+     <p>Segue sua Pontuação abaixo:<br>
+
+      <p>Dentro da seção de Beber e usar drogas: {{dbs.q01|add:dbs.q02|add:dbs.q03|add:dbs.q04|add:dbs.q05|add:dbs.q06}} pontos de possíveis 24.
+      <p>Dentro da seção de Cuidados pessoais  : {{dbs.q07|add:dbs.q08|add:dbs.q09|add:dbs.q10|add:dbs.q11}} pontos de possíveis 20.
+      <p>Dentro da seção de Relacionamentos    : {{dbs.q12|add:dbs.q13|add:dbs.q14|add:dbs.q15}} pontos de possíveis 16.
+      <p>Dentro da seção de Recursos materiais : {{dbs.q16|add:dbs.q17|add:dbs.q18}} pontos de possíveis 12.
+      <p>Dentro da seção de Perspectiva de vida: {{dbs.q19|add:dbs.q20|add:dbs.q21}} pontos de possíveis 12.
+      <p>Dentro da seção de Planejamento       : {{dbs.q22|add:dbs.q23|add:dbs.q24|add:dbs.q25|add:dbs.q26}} pontos de possíveis 20.
+      <p>Pontuação Total                       : {{dbs.q01|add:dbs.q02|add:dbs.q03|add:dbs.q04|add:dbs.q05|add:dbs.q06|add:dbs.q07|add:dbs.q08|add:dbs.q09|add:dbs.q10|add:dbs.q11|add:dbs.q12|add:dbs.q13|add:dbs.q14|add:dbs.q15|add:dbs.q16|add:dbs.q17|add:dbs.q18|add:dbs.q19|add:dbs.q20|add:dbs.q21|add:dbs.q22|add:dbs.q23|add:dbs.q24|add:dbs.q25|add:dbs.q26}} pontos de possíveis 104.
+                <!--    <table class="table">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Beber e usar drogas   </th>
+                              <th scope="col">Cuidados pessoais     </th>
+                              <th scope="col">Relacionamentos       </th>
+                              <th scope="col">Recursos materiais    </th>
+                              <th scope="col">Perspectiva de vida   </th>
+                              <th scope="col">Total   </th>
+                              <th scope="col">Ações</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                              
+    
+                          <tr>
+                              <th></th>
+                              <td>{{dbs.q01|add:dbs.q02|add:dbs.q03|add:dbs.q04|add:dbs.q05|add:dbs.q06}} </td>
+                              <td>{{dbs.q07|add:dbs.q08|add:dbs.q09|add:dbs.q10|add:dbs.q11}}             </td>
+                              <td>{{dbs.q12|add:dbs.q13|add:dbs.q14|add:dbs.q15}}                         </td>
+                              <td>{{dbs.q16|add:dbs.q17|add:dbs.q18}}</td>
+                              <td>{{dbs.q19|add:dbs.q20|add:dbs.q21}}</td>
+                              <td>{{dbs.q01|add:dbs.q02|add:dbs.q03|add:dbs.q04|add:dbs.q05|add:dbs.q06|add:dbs.q07|add:dbs.q08|add:dbs.q09|add:dbs.q10|add:dbs.q11|add:dbs.q12|add:dbs.q13|add:dbs.q14|add:dbs.q15|add:dbs.q16|add:dbs.q17|add:dbs.q18|add:dbs.q19|add:dbs.q20|add:dbs.q21}}</td>
+                              <td>
+                                  <a href="/view/{{dbs.id}}/" class="btn btn-dark">Visualizar</a>
+                                  <a href="/edit/{{dbs.id}}/" class="btn btn-primary">Editar</a>
+                                  <a href="/delete/{{dbs.id}}/" class="btn btn-danger btnDel">Deletar</a>
+
+                              </td>
+                            </tr> -->
+  {% endfor %} 
+                          
+    
+{% endblock %}

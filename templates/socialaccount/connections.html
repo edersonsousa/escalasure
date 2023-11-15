@@ -1,0 +1,63 @@
+{% extends "socialaccount/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Contas conectadas" %}{% endblock %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="static/estilo.css">
+    
+</head>
+<div class="text-center">
+    <h1>{% trans "Contas conectadas" %}</h1>
+
+    {% if form.accounts %}
+    <p>{% blocktrans %}Você pode entrar em sua conta usando qualquer uma das seguintes contas de terceiros:{% endblocktrans %}</p>
+
+
+    <form method="post" action="{% url 'socialaccount_connections' %}">
+    {% csrf_token %}
+
+    <fieldset>
+    {% if form.non_field_errors %}
+    <div id="errorMsg">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    {% for base_account in form.accounts %}
+    {% with base_account.get_provider_account as account %}
+    <div>
+    <label for="id_account_{{ base_account.id }}">
+    <input id="id_account_{{ base_account.id }}" type="radio" name="account" value="{{ base_account.id }}"/>
+    <span class="socialaccount_provider {{ base_account.provider }} {{ account.get_brand.id }}">{{account.get_brand.name}}</span>
+    -> {{ account }}
+    </label>
+    </div>
+    {% endwith %}
+    {% endfor %}
+
+    <div class="my-2">
+    <button class="btn btn-dark" type="submit">{% trans 'Remover' %}</button>
+    </div>
+
+    </fieldset>
+
+    </form>
+
+    {% else %}
+    <p>{% trans 'You currently have no social network accounts connected to this account.' %}</p>
+    {% endif %}
+
+    <hr>
+    <h3>{% trans 'Add a 3rd Party Account' %}</h3>
+
+    <div class="socialaccount_providers">
+        {% include "socialaccount/snippets/provider_list.html" with process="connect" %}
+    </div>
+
+    {% include "socialaccount/snippets/login_extra.html" %}
+</div>
+{% endblock %}

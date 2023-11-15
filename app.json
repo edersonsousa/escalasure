@@ -1,0 +1,35 @@
+{
+    "name": "Start on Heroku: Python",
+    "description": "A barebones Python app, which can easily be deployed to Heroku.",
+    "image": "heroku/python",
+    "repository": "https://github.com/heroku/python-getting-started",
+    "keywords": [
+        "python",
+        "django"
+    ],
+    "addons": [
+        "heroku-postgresql"
+    ],
+    "env": {
+        "SECRET_TOKEN": {
+            "description": "A secret key for verifying the integrity of signed cookies.",
+            "generator": "secret"
+        },
+        "WEB_CONCURRENCY": "5"
+    },
+    "environments": {
+        "test": {
+            "env": {
+                "SECRET_TOKEN": "test-secret"
+            },
+            "scripts": {
+                "postdeploy": "python manage.py migrate --noinput",
+                "test-setup": "python manage.py collectstatic --noinput",
+                "test": "python manage.py test --noinput"
+            }
+
+
+        }
+    }
+    
+}
